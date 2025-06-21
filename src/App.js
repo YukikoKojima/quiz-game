@@ -1,23 +1,13 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js (変更後の例)
+import React from 'react'; // Reactをインポート
+import QuizGame from './QuizGame'; // QuizGameコンポーネントをインポート
+import './App.css'; // 既存のCSSがあれば残す
+import './index.css'; // Tailwind CSSを読み込むために必要 (もし src/index.css があれば)
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <QuizGame /> {/* ここでQuizGameコンポーネントを表示 */}
     </div>
   );
 }
