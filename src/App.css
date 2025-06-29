@@ -1,20 +1,26 @@
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(180deg); }
+}
+
+.sparkle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #FFFACD; /* 白っぽい黄色 */
+  border-radius: 50%;
+  animation: sparkle 2s infinite;
+  box-shadow: 0 0 5px #FFFACD, 0 0 10px #FFFACD, 0 0 15px #FFFACD;
+}
+
+body {
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  background: linear-gradient(135deg, #ffc0cb, #e6e6fa, #fffacd); /* ピンク、薄紫、黄色 */
+  overflow: hidden;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+  background-color: transparent;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -22,17 +28,162 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
 }
 
-.App-link {
-  color: #61dafb;
+.quiz-container {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+  border: 3px solid #ff69b4;
+  animation: float 3s ease-in-out infinite;
+  position: relative; /* 子要素の絶対配置の基準 */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.selection-screen h2 {
+  color: #ff1493;
+  margin-bottom: 30px;
+}
+
+.quit-button.top-right {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 8px 15px;
+  font-size: 0.8em;
+  border-radius: 10px;
+  background: linear-gradient(45deg, #87ceeb, #4682b4); /* 水色のグラデーション */
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+.quit-button.top-right:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.selection-options {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.selection-options button {
+  padding: 20px;
+  font-size: 1.2em;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid #add8e6; /* 水色 */
+  background-color: #f0f8ff; /* アリスブルー */
+  color: #1e90ff; /* ドジャーブルー */
+}
+
+.selection-options button:hover {
+  background-color: #add8e6;
+  color: white;
+  transform: scale(1.05);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.question-text {
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #ff1493;
+}
+
+.answer-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.answer-options button {
+  width: 100%;
+  padding: 15px;
+  font-size: 1.1em;
+  border: 2px solid #ffb6c1;
+  border-radius: 15px;
+  cursor: pointer;
+  background-color: #fff0f5;
+  color: #ff1493;
+  transition: all 0.3s ease;
+  text-align: center;
+  font-weight: bold;
+  position: relative;
+  overflow: hidden;
+}
+
+.answer-options button:hover:not(:disabled) {
+  background-color: #ff69b4;
+  color: white;
+  transform: scale(1.05);
+}
+
+.answer-options button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.answer-options button.correct {
+  background-color: #90ee90;
+  border-color: #32cd32;
+  color: white;
+}
+
+.answer-options button.incorrect {
+  background-color: #f08080;
+  border-color: #dc143c;
+  color: white;
+}
+
+.navigation-buttons {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.next-button, .restart-button, .quit-button {
+  padding: 15px 30px;
+  font-size: 1.2em;
+  cursor: pointer;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.next-button, .restart-button {
+  background: linear-gradient(45deg, #ff69b4, #ff1493);
+}
+
+.quit-button {
+  background: linear-gradient(45deg, #add8e6, #1e90ff);
+}
+
+.next-button:hover, .restart-button:hover, .quit-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.score-section {
+  margin-top: 20px;
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #ff1493;
 }

@@ -1,15 +1,4 @@
-import React, { useState, useEffect } from 'react';
-
-const QuizGame = () => {
-  const [gameState, setGameState] = useState('selecting'); // 'selecting', 'playing', 'finished'
-  const [questions, setQuestions] = useState([]);
-  const [numQuestions, setNumQuestions] = useState(0);
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [score, setScore] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [showResult, setShowResult] = useState(false);
-
-  const allQuestions = [
+[
     {
       "question": "FOLの正式名称は？",
       "options": ["エフ・オー・ロジスティクス株式会社", "エフ・オー・リード株式会社", "フル・オペレーション・ロジスティクス", "ファースト・オーダー・ロジスティクス"],
@@ -1068,12 +1057,6 @@ const QuizGame = () => {
     "category": "派遣会社"
   },
   {
-    "question": "派遣会社「バイトレ」の略称は？",
-    "options": ["BT", "DIA", "FAC", "FCM"],
-    "correct": 0,
-    "category": "派遣会社"
-  },
-  {
     "question": "派遣会社「ディアスタッフ」の略称は？",
     "options": ["BT", "DIA", "FAC", "FCM"],
     "correct": 1,
@@ -1319,136 +1302,4 @@ const QuizGame = () => {
       "correct": 0,
       "category": "実務知識"
     }
-  ];
-
-  const shuffleArray = (array) => {
-    const shuffled = [...array];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled;
-  };
-
-  const startGame = (count) => {
-    const shuffledQuestions = shuffleArray(allQuestions).slice(0, count);
-    setQuestions(shuffledQuestions);
-    setNumQuestions(count);
-    setCurrentQuestion(0);
-    setScore(0);
-    setSelectedAnswer(null);
-    setShowResult(false);
-    setGameState('playing');
-  };
-
-  const handleAnswerSelect = (answerIndex) => {
-    if (showResult) return;
-    setSelectedAnswer(answerIndex);
-    setShowResult(true);
-    if (answerIndex === questions[currentQuestion].correct) {
-      setScore(score + 1);
-    }
-  };
-
-  const handleNext = () => {
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-      setSelectedAnswer(null);
-      setShowResult(false);
-    } else {
-      setGameState('finished');
-    }
-  };
-
-  const quitGame = () => {
-    setGameState('selecting');
-  };
-
-  if (gameState === 'selecting') {
-    return (
-      <div className="quiz-container selection-screen">
-        <h2>クイズの長さを選んでね！</h2>
-        <div className="selection-options">
-          <button onClick={() => startGame(8)}>8問</button>
-          <button onClick={() => startGame(12)}>12問</button>
-          <button onClick={() => startGame(20)}>20問</button>
-          <button onClick={() => startGame(30)}>30問</button>
-        </div>
-      </div>
-    );
-  }
-
-  if (gameState === 'finished') {
-    // 全問正解かどうかの判定
-    const isPerfectScore = score === numQuestions;
-    let message = "";
-    if (isPerfectScore) {
-      message = "おめでとう！全問正解！🎉✨";
-    } else if (score >= numQuestions * 0.7) { // 7割以上で惜しいメッセージ
-      message = "あと少し！よく頑張ったね！👏";
-    } else {
-      message = "ドンマイ！また挑戦してね！😊";
-    }
-
-    return (
-      <div className="quiz-container">
-        <div className="score-section">
-          <h2>{message}</h2>
-          <p>あなたのスコア: {score} / {numQuestions}</p>
-          <button onClick={quitGame} className="restart-button">もう一度挑戦</button>
-        </div>
-      </div>
-    );
-  }
-
-  const currentQ = questions[currentQuestion];
-
-  const getButtonClass = (index) => {
-    if (!showResult) {
-      return "";
-    }
-    const isCorrect = index === currentQ.correct;
-    const isSelected = index === selectedAnswer;
-
-    if (isCorrect) {
-      return "correct";
-    } 
-    if (isSelected) {
-      return "incorrect";
-    }
-    return "";
-  };
-
-  return (
-    <div className="quiz-container">
-      <button onClick={quitGame} className="quit-button top-right">クイズをやめる</button>
-      <div className="question-section">
-        <div className="question-count">
-          <span>問題 {currentQuestion + 1}</span>/{numQuestions}
-        </div>
-        <div className="question-text">{currentQ.question}</div>
-      </div>
-      <div className="answer-options">
-        {currentQ.options.map((option, index) => (
-          <button
-            key={index}
-            onClick={() => handleAnswerSelect(index)}
-            disabled={showResult}
-            className={getButtonClass(index)}
-          >
-            {option}
-          </button>
-        ))}
-      </div>
-      <div className="navigation-buttons">
-        {showResult && (
-          <button onClick={handleNext} className="next-button">
-            {currentQuestion < questions.length - 1 ? '次の問題へ' : '結果を見る'}
-          </button>
-        )}
-      </div>
-    </div>
-  );
-};
-
-export default QuizGame;
+]
